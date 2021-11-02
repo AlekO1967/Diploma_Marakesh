@@ -1,3 +1,10 @@
+Thumbs.db*
+.DS_Store*
+HELP.md
+.gradle
+build/
+target/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -33,14 +40,8 @@ out/
 *.tar.gz
 *.rar
 
-### Stuff ###
-.allure/
-node_modules/
-
 ### Exclusions ###
-HELP.md
-.gradle
-build/
 !gradle/wrapper/gradle-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
