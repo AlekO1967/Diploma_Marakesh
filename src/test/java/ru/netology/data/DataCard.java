@@ -1,6 +1,5 @@
 package ru.netology.data;
 
-import com.mysql.cj.protocol.x.XProtocolRow;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
