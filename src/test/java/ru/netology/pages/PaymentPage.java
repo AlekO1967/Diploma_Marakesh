@@ -6,29 +6,31 @@ import ru.netology.data.DataCard;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class PaymentGate {
+public class PaymentPage {
     private SelenideElement heading = $$("h3").find(exactText("Оплата по карте"));
     private SelenideElement cardNumberField = $(byText("Номер карты")).parent().$("[class=\"input_control\"]");
     private SelenideElement monthField = $(byText("Месяц")).parent().$("[class=\"input_control\"]");
     private SelenideElement yearField = $(byText("Год")).parent().$("[class=\"input_control\"]");
     private SelenideElement cardHolder = $(byText("Владелец")).parent().$("[class=\"input_control\"]");
     private SelenideElement cvcField = $(byText("CVC/CVV")).parent().$("[class=\"input_control\"]");
+    private SelenideElement continueButton = $(byText("Продолжить"));
+
     private SelenideElement approvedOperation = $(byText("Операция одобрена Банком")).parent().$("[class=\"notification_content\"]");
     private SelenideElement failureOperation = $(byText("Ошибка! Банк отказал в проведении операции.")).parent().$("[class=\"notification_content\"]");
-    private SelenideElement wrongFormatError = $(byText("Неверный формат"));
-    private ElementsCollection wrongFormatFourError = $$(byText("Неверный формат"));
-    private SelenideElement cardExpirationDateError = $(byText("Неверно указан срок действия карты"));
-    private SelenideElement cardExpiredError = $(byText("Истёк срок действия карты"));
-    private SelenideElement requiredFieldError = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement wrongFormatCardNumber = $(byText("Неверный формат"));
+    private SelenideElement monthError = $("div:nth-child(2) > span > span:nth-child(1) > span > span > span.input__sub");
+    private SelenideElement yearError = $("div:nth-child(2) > span > span:nth-child(2) > span > span > span.input__sub");
+    private SelenideElement wrongDateCard = $(byText("Неверно указан срок действия карты"));
+    private SelenideElement cardExpired = $(byText("Истёк срок действия карты"));
+    private SelenideElement wrongCardHolderField = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement cvcFieldError = $("div:nth-child(3) > span > span:nth-child(2) > span > span > span.input__sub");
     private SelenideElement cancelField = $$("[class=\"icon-button_text\"]").first();
-    private SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
 
-    public PaymentGate() {
+    public PaymentPage() {
         heading.shouldBe(visible);
     }
 
@@ -41,7 +43,7 @@ public class PaymentGate {
         continueButton.click();
     }
 
-    public void waitingForApprovalNotification() {
+    public void waitForApprovalNotification() {
         approvedOperation.shouldBe(visible, Duration.ofSeconds(15));
         cancelField.click();
     }
@@ -51,19 +53,36 @@ public class PaymentGate {
     }
 
     public void waitForNotificationWrongFormat() {
-        wrongFormatError.shouldBe(visible, Duration.ofSeconds(15));
+        wrongFormatCardNumber.shouldBe(visible, Duration.ofSeconds(15));
     }
 
-    public void waitForNotificationExpirationDateError() {
-        cardExpirationDateError.shouldBe(visible, Duration.ofSeconds(15));
+    public void wrongFormatCardHolderField() {
+        wrongCardHolderField.shouldHave(text("Поле обязательно для заполнения"));
     }
 
-    public void waitForNotificationExpiredError() {
-        cardExpiredError.shouldBe(visible, Duration.ofSeconds(15));
+    public void wrongFormatCardNumber() {
+        wrongFormatCardNumber.shouldHave(text("Неверный формат"));
     }
 
-    public void waitForNotificationWrongFormatFourFields() {
-        wrongFormatFourError.shouldHaveSize(4);
-        requiredFieldError.shouldBe(visible, Duration.ofSeconds(15));
+    public void wrongFormatMonth() {
+        monthError.shouldHave(text("Неверный формат"));
+    }
+
+    public void wrongFormatYear() {
+        yearError.shouldHave(text("Неверный формат"));
+    }
+
+    public void wrongFormatCVC() {
+        cvcFieldError.shouldHave(text("Неверный формат"));
+    }
+
+    public void wrongFormatDateCard() {
+        wrongDateCard.shouldHave(text("Неверно указан срок действия карты"));
+    }
+
+    public void expiredDateCard() {
+        cardExpired.shouldHave(text("Истёк срок действия карты"));
     }
 }
+
+

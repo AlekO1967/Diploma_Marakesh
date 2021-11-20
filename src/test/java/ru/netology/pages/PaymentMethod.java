@@ -16,12 +16,12 @@ public class PaymentMethod {
         heading.shouldBe(visible);
     }
 
-    public PaymentGate goToPaymentGate() {
+    public PaymentPage goToPaymentGate() {
         buyButton.click();
-        return new PaymentGate();
+        return new PaymentPage();
     }
 
-    public CreditGate goToCreditGame() {
+    public CreditGate goToCreditGate() {
         buyButton.click();
         return new CreditGate();
     }
