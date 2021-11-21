@@ -22,7 +22,7 @@ public class PaymentMethod {
     }
 
     public CreditGate goToCreditGate() {
-        buyButton.click();
+        creditButton.click();
         return new CreditGate();
     }
 }

@@ -12,7 +12,6 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentGateTests {
-    PaymentMethod paymentMethod = new PaymentMethod();
 
     @BeforeAll
     public void setUpAll() {
