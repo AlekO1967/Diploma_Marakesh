@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PaymentGateTests {
 
     @BeforeAll
-    public void setUpAll() {
+    public static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
@@ -24,7 +24,7 @@ public class PaymentGateTests {
     }
 
     @AfterAll
-    public void tearDownAll() {
+    public static void tearDownAll() {
         SelenideLogger.removeListener("allure");
         SqlHelper.clearDB();
     }
@@ -35,8 +35,7 @@ public class PaymentGateTests {
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getApprovedCard());
         payment.waitForApprovalNotification();
-        val paymentStatus = SqlHelper.getPaymentStatus();
-        assertEquals("APPROVED", paymentStatus);
+        assertEquals("APPROVED", SqlHelper.getPaymentStatus());
     }
 
     @Test
@@ -45,16 +44,15 @@ public class PaymentGateTests {
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getDeclinedCard());
         payment.waitForNotificationFailure();
-        val paymentStatus = SqlHelper.getPaymentStatus();
-        assertEquals("DECLINED", paymentStatus);
+        assertEquals("DECLINED", SqlHelper.getPaymentStatus());
     }
 
     @Test
-    void shouldPayByValidNumberCard() {
+    void shouldPayByNotValidNumberCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardNotValidNumber());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -70,7 +68,7 @@ public class PaymentGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardNumberInputLatin());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -78,7 +76,7 @@ public class PaymentGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardNumberInputCyrillic());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -86,7 +84,7 @@ public class PaymentGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardNumberInputSpecialCharacters());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -94,7 +92,7 @@ public class PaymentGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardNumberInput15Characters());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -110,7 +108,7 @@ public class PaymentGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardMoreFourYear());
-        payment.wrongFormatDateCard();
+        payment.wrongYearCard();
     }
 
     @Test
@@ -146,19 +144,19 @@ public class PaymentGateTests {
     }
 
     @Test
-    void shouldInput00FieldMonthCard() {
-        val paymentMethod = new PaymentMethod();
-        val payment = paymentMethod.goToPaymentGate();
-        payment.inputData(DataHelper.getCardInput00InFieldMonth());
-        payment.wrongFormatMonth();
-    }
-
-    @Test
-    void shouldInput13FieldMonthCard() {
+    void shouldPayByWrongDateCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardInput13InFieldMonth());
-        payment.wrongFormatMonth();
+        payment.wrongFormatDateCard();
+    }
+
+    @Test
+    void shouldPayByWrongDateCard_00() {
+        val paymentMethod = new PaymentMethod();
+        val payment = paymentMethod.goToPaymentGate();
+        payment.inputData(DataHelper.getCardInput00InFieldMonth());
+        payment.wrongFormatDateCard();
     }
 
     @Test
@@ -207,7 +205,7 @@ public class PaymentGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToPaymentGate();
         payment.inputData(DataHelper.getCardNoCardHolder());
-        payment.wrongFormatCardHolderField();
+        payment.emptyCardHolderField();
     }
 
     @Test

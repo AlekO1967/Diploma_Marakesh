@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreditGateTests {
     @BeforeAll
-    public void setUpAll() {
+    static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
@@ -26,15 +26,15 @@ public class CreditGateTests {
     }
 
     @AfterAll
-    public void tearDownAll() {
+    static void tearDownAll() {
         SelenideLogger.removeListener("allure");
         SqlHelper.clearDB();
     }
 
     @Test
     void shouldByPayApprovedCreditCard() {
-        val paymentMethod = new PaymentMethod();
-        val payment = paymentMethod.goToCreditGate();
+        val startPage = new PaymentMethod();
+        val payment = startPage.goToCreditGate();
         payment.inputData(DataHelper.getApprovedCard());
         payment.waitForApprovalNotification();
         val paymentStatus = SqlHelper.getCreditRequestStatus();
@@ -43,8 +43,8 @@ public class CreditGateTests {
 
     @Test
     void shouldByPayDeclinedCreditCard() {
-        val paymentMethod = new PaymentMethod();
-        val payment = paymentMethod.goToCreditGate();
+        val startPage = new PaymentMethod();
+        val payment = startPage.goToCreditGate();
         payment.inputData(DataHelper.getDeclinedCard());
         payment.waitForNotificationFailure();
         val paymentStatus = SqlHelper.getCreditRequestStatus();
@@ -52,11 +52,11 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByValidNumberCreditCard() {
+    void shouldPayByNotValidNumberCreditCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardNotValidNumber());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -72,15 +72,15 @@ public class CreditGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardNumberInputLatin());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
     void shouldPayByCyrillicSymbolsNumberCreditCard() {
         val paymentMethod = new PaymentMethod();
-        val payment = paymentMethod.goToPaymentGate();
+        val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardNumberInputCyrillic());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -88,7 +88,7 @@ public class CreditGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardNumberInputSpecialCharacters());
-        payment.waitForNotificationWrongFormat();
+        payment.wrongFormatCardNumber();
     }
 
     @Test
@@ -96,11 +96,9 @@ public class CreditGateTests {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardNumberInput15Characters());
-        payment.waitForNotificationWrongFormat();
-    }
-
-    @Test
-    void shouldPayByExpiredCreditCard() {
+        payment.wrongFormatCardNumber();
+    }@Test
+    void shouldPayByExpiredCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardExpired());
@@ -108,15 +106,15 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByMoreFourYearCreditCard() {
+    void shouldPayByMoreFourYearCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardMoreFourYear());
-        payment.wrongFormatDateCard();
+        payment.wrongYearCard();
     }
 
     @Test
-    void shouldPayByEmptyFieldMonthCreditCard() {
+    void shouldPayByEmptyFieldMonthCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardEmptyFieldMonth());
@@ -124,7 +122,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByEmptyFieldYearCreditCard() {
+    void shouldPayByEmptyFieldYearCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardEmptyFieldYear());
@@ -132,7 +130,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByInvalidFieldMonthCreditCard() {
+    void shouldPayByInvalidFieldMonthCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardOneDigitInFieldMonth());
@@ -140,7 +138,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByInvalidFieldYearCreditCard() {
+    void shouldPayByInvalidFieldYearCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardOneDigitInFieldYear());
@@ -148,23 +146,23 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInput00FieldMonthCreditCard() {
-        val paymentMethod = new PaymentMethod();
-        val payment = paymentMethod.goToCreditGate();
-        payment.inputData(DataHelper.getCardInput00InFieldMonth());
-        payment.wrongFormatMonth();
-    }
-
-    @Test
-    void shouldInput13FieldMonthCreditCard() {
+    void shouldPayByWrongDateCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInput13InFieldMonth());
-        payment.wrongFormatMonth();
+        payment.wrongFormatDateCard();
     }
 
     @Test
-    void shouldInputCyrillicInFieldMonthCreditCard() {
+    void shouldPayByWrongDateCard_00() {
+        val paymentMethod = new PaymentMethod();
+        val payment = paymentMethod.goToCreditGate();
+        payment.inputData(DataHelper.getCardInput00InFieldMonth());
+        payment.wrongFormatDateCard();
+    }
+
+    @Test
+    void shouldInputCyrillicInFieldMonthCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputCyrillicInFieldMonth());
@@ -172,7 +170,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputLatinInFieldMonthCreditCard() {
+    void shouldInputLatinInFieldMonthCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputLatinInFieldMonth());
@@ -180,7 +178,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputCyrillicInFieldYearCreditCard() {
+    void shouldInputCyrillicInFieldYearCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputCyrillicInFieldYear());
@@ -188,7 +186,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputLatinInFieldYearCreditCard() {
+    void shouldInputLatinInFieldYearCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputLatinInFieldYear());
@@ -196,7 +194,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputSpecialSymbolsInFieldsMonthYearCreditCard() {
+    void shouldInputSpecialSymbolsInFieldsMonthYearCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputFieldsMonthYearSpecialCharacters());
@@ -205,15 +203,15 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByEmptyFieldCardHolderCreditCard() {
+    void shouldPayByEmptyFieldCardHolderCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardNoCardHolder());
-        payment.wrongFormatCardHolderField();
+        payment.emptyCardHolderField();
     }
 
     @Test
-    void shouldInputRussianInCardHolderCreditCard() {
+    void shouldInputRussianInCardHolderCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardHolderCyrillic());
@@ -221,7 +219,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputSpecialSymbolsInCardHolderCreditCard() {
+    void shouldInputSpecialSymbolsInCardHolderCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardHolderSpecialCharacters());
@@ -229,7 +227,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldPayByEmptyFieldCVCCreditCard() {
+    void shouldPayByEmptyFieldCVCCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardEmptyFieldCVV2_CVS2());
@@ -237,7 +235,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputCyrillicSymbolsInFieldCVCCreditCard() {
+    void shouldInputCyrillicSymbolsInFieldCVCCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputCyrillicInFieldCVV2_CVS2());
@@ -245,7 +243,7 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputLatinSymbolsInFieldCVCCreditCard() {
+    void shouldInputLatinSymbolsInFieldCVCCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputLatinInFieldCVV2_CVS2());
@@ -253,10 +251,11 @@ public class CreditGateTests {
     }
 
     @Test
-    void shouldInputSpecialSymbolsInFieldCVCCreditCard() {
+    void shouldInputSpecialSymbolsInFieldCVCCard() {
         val paymentMethod = new PaymentMethod();
         val payment = paymentMethod.goToCreditGate();
         payment.inputData(DataHelper.getCardInputFieldCVV2_CVS2SpecialCharacters());
         payment.wrongFormatCVC();
     }
+
 }

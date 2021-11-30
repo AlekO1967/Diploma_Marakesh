@@ -37,7 +37,7 @@ public class SqlHelper {
 
     public static String getOrderCount() {
         Long count = null;
-        var codesSQL = "SELECT COUNT(*) FREO order_entity;";
+        var codesSQL = "SELECT COUNT(*) FROM order_entity;";
         var runner = new QueryRunner();
         try (var conn = DriverManager.getConnection(url, user, password)) {
             count = runner.query(conn, codesSQL, new ScalarHandler<>());

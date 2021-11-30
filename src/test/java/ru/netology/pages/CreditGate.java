@@ -13,22 +13,34 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class CreditGate {
     private SelenideElement heading = $$("h3").find(exactText("Кредит по данным карты"));
-    private SelenideElement cardNumberField = $(byText("Номер карты")).parent().$("[class=\"input_control\"]");
-    private SelenideElement monthField = $(byText("Месяц")).parent().$("[class=\"input_control\"]");
-    private SelenideElement yearField = $(byText("Год")).parent().$("[class=\"input_control\"]");
-    private SelenideElement cardHolder = $(byText("Владелец")).parent().$("[class=\"input_control\"]");
-    private SelenideElement cvcField = $(byText("CVC/CVV")).parent().$("[class=\"input_control\"]");
+    private SelenideElement cardNumberField = $(".input__box>input.input__control[placeholder=\"0000 0000 0000 0000\"]");
+    private SelenideElement monthField = $($(".input__box>input.input__control[placeholder=\"08\"]"));
+    private SelenideElement yearField = $($(".input__box>input.input__control[placeholder=\"22\"]"));
+    private SelenideElement cardHolder = $(byText("Владелец")).parent().$(".input__box>input.input__control[type=\"text\"]");
+    private SelenideElement cvcField = $(byText("CVC/CVV")).parent().$(".input__box>input.input__control[placeholder=\"999\"]");
     private SelenideElement continueButton = $(byText("Продолжить"));
 
-    private SelenideElement approvedOperation = $(byText("Операция одобрена Банком")).parent().$("[class=\"notification_content\"]");
-    private SelenideElement failureOperation = $(byText("Ошибка! Банк отказал в проведении операции.")).parent().$("[class=\"notification_content\"]");
-    private SelenideElement wrongFormatCardNumber = $(byText("Неверный формат"));
-    private SelenideElement monthError = $("div:nth-child(2) > span > span:nth-child(1) > span > span > span.input__sub");
-    private SelenideElement yearError = $("div:nth-child(2) > span > span:nth-child(2) > span > span > span.input__sub");
-    private SelenideElement wrongDateCard = $(byText("Неверно указан срок действия карты"));
-    private SelenideElement cardExpired = $(byText("Истёк срок действия карты"));
-    private SelenideElement wrongCardHolderField = $(byText("Поле обязательно для заполнения"));
-    private SelenideElement cvcFieldError = $("div:nth-child(3) > span > span:nth-child(2) > span > span > span.input__sub");
+    private SelenideElement approvedOperation = $$(".notification__title").find(exactText("Успешно"));
+    private SelenideElement failureOperation = $$(".notification__title").find(exactText("Ошибка"));
+
+
+    private SelenideElement wrongFormatCardNumber = $$(".input__top").find(exactText("Номер карты")).parent().
+            $$(".input__sub").find(exactText("Неверный формат"));
+    private SelenideElement monthError = $$(".input__top").find(exactText("Месяц")).parent().
+            $$(".input__sub").find(exactText("Неверный формат"));
+    private SelenideElement wrongDateCard = $$(".input__top").find(exactText("Месяц")).parent().
+            $$(".input__sub").find(exactText("Неверно указан срок действия карты"));
+    private SelenideElement wrongYearCard = $$(".input__top").find(exactText("Год")).parent().
+            $$(".input__sub").find(exactText("Неверно указан срок действия карты"));
+    private SelenideElement cardExpired = $$(".input__top").find(exactText("Год")).parent().
+            $$(".input__sub").find(exactText("Истёк срок действия карты"));
+    private SelenideElement yearError = $(byText("Неверный формат"));
+    private SelenideElement emptyCardHolderField = $$(".input__top").find(exactText("Владелец")).parent().
+            $$(".input__sub").find(exactText("Поле обязательно для заполнения"));
+    private SelenideElement wrongCardHolderField = $$(".input__top").find(exactText("Владелец")).parent().
+            $$(".input__sub").find(exactText("Неверный формат"));
+    private SelenideElement cvcFieldError = $$(".input__top").find(exactText("CVC/CVV")).parent().
+            $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement cancelField = $$("[class=\"icon-button_text\"]").first();
 
     public CreditGate() {
@@ -40,7 +52,7 @@ public class CreditGate {
         monthField.setValue(card.getMonth());
         yearField.setValue(card.getYear());
         cardHolder.setValue(card.getCardHolder());
-        cvcField.setValue(card.getCvs2());
+        cvcField.setValue(card.getCvc());
         continueButton.click();
     }
 
@@ -53,35 +65,39 @@ public class CreditGate {
         failureOperation.shouldBe(visible, Duration.ofSeconds(15));
     }
 
-    public void waitForNotificationWrongFormat() {
-        wrongFormatCardNumber.shouldBe(visible, Duration.ofSeconds(15));
-    }
-
-    public void wrongFormatCardHolderField() {
-        wrongCardHolderField.shouldHave(text("Поле обязательно для заполнения"));
-    }
-
     public void wrongFormatCardNumber() {
-        wrongFormatCardNumber.shouldHave(text("Неверный формат"));
+        wrongFormatCardNumber.shouldBe(visible);
     }
 
     public void wrongFormatMonth() {
-        monthError.shouldHave(text("Неверный формат"));
+        monthError.shouldBe(visible);
+    }
+
+    public void wrongYearCard() {
+        wrongYearCard.shouldBe(visible);
     }
 
     public void wrongFormatYear() {
-        yearError.shouldHave(text("Неверный формат"));
-    }
-
-    public void wrongFormatCVC() {
-        cvcFieldError.shouldHave(text("Неверный формат"));
+        yearError.shouldBe(visible);
     }
 
     public void wrongFormatDateCard() {
-        wrongDateCard.shouldHave(text("Неверно указан срок действия карты"));
+        wrongDateCard.shouldBe(visible);
     }
 
     public void expiredDateCard() {
-        cardExpired.shouldHave(text("Истёк срок действия карты"));
+        cardExpired.shouldBe(visible);
+    }
+
+    public void emptyCardHolderField() {
+        emptyCardHolderField.shouldBe(visible);
+    }
+
+    public void wrongFormatCardHolderField() {
+        wrongCardHolderField.shouldBe(visible);
+    }
+
+    public void wrongFormatCVC() {
+        cvcFieldError.shouldBe(visible);
     }
 }

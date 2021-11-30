@@ -9,24 +9,34 @@ import java.util.Locale;
 
 public class DataHelper {
 
-    public static DataCard getApprovedCard() {
-        return new DataCard("4444 4444 4444 4441", "08", "22", "Aleksandr Osipov", "123");
-    }
-
-    public static DataCard getDeclinedCard() {
-        return new DataCard("4444 4444 4444 4442", "08", "22", "Aleksandr Osipov", "123");
-    }
-
-    public static DataCard getEmptyCard() {
-        return new DataCard("", "", "", "", "");
-    }
-
     public static String getShiftedMonth(int monthCount) {
         return LocalDate.now().plusMonths(monthCount).format(DateTimeFormatter.ofPattern("MM"));
     }
 
     public static String getShiftedYear(int yearCount) {
         return LocalDate.now().plusYears(yearCount).format(DateTimeFormatter.ofPattern("YY"));
+    }
+
+    public static DataCard getApprovedCard() {
+        Faker faker = new Faker();
+        String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
+        String month = getShiftedMonth(9);
+        String year = getShiftedYear(1);
+        String cvs2 = faker.number().digits(3);
+        return new DataCard("4444 4444 4444 4441", month, year, cardHolder, cvs2);
+    }
+
+    public static DataCard getDeclinedCard() {
+        Faker faker = new Faker();
+        String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
+        String month = getShiftedMonth(9);
+        String year = getShiftedYear(1);
+        String cvs2 = faker.number().digits(3);
+        return new DataCard("4444 4444 4444 4442", month, year, cardHolder, cvs2);
+    }
+
+    public static DataCard getEmptyCard() {
+        return new DataCard("", "", "", "", "");
     }
 
     public static DataCard getCardNotValidNumber() {
