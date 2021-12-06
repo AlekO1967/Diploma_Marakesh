@@ -3,10 +3,7 @@ package ru.netology.tests;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SqlHelper;
 import ru.netology.pages.PaymentMethod;
@@ -22,13 +19,13 @@ public class CreditGateTests {
 
     @BeforeEach
     public void openPage() {
+        SqlHelper.clearDB();
         open(System.getProperty("sut.url"));
     }
 
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
-        SqlHelper.clearDB();
     }
 
     @Test
@@ -37,8 +34,7 @@ public class CreditGateTests {
         val payment = startPage.goToCreditGate();
         payment.inputData(DataHelper.getApprovedCard());
         payment.waitForApprovalNotification();
-        val paymentStatus = SqlHelper.getCreditRequestStatus();
-        assertEquals("APPROVED", paymentStatus);
+        assertEquals("APPROVED", SqlHelper.getCreditRequestStatus());
     }
 
     @Test
@@ -47,8 +43,7 @@ public class CreditGateTests {
         val payment = startPage.goToCreditGate();
         payment.inputData(DataHelper.getDeclinedCard());
         payment.waitForNotificationFailure();
-        val paymentStatus = SqlHelper.getCreditRequestStatus();
-        assertEquals("DECLINED", paymentStatus);
+        assertEquals("DECLINED", SqlHelper.getCreditRequestStatus());
     }
 
     @Test

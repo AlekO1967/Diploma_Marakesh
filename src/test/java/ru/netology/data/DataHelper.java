@@ -20,7 +20,7 @@ public class DataHelper {
     public static DataCard getApprovedCard() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, cvs2);
@@ -29,7 +29,7 @@ public class DataHelper {
     public static DataCard getDeclinedCard() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4442", month, year, cardHolder, cvs2);
@@ -42,7 +42,7 @@ public class DataHelper {
     public static DataCard getCardNotValidNumber() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("9999 9999 9999 9999", month, year, cardHolder, cvs2);
@@ -51,7 +51,7 @@ public class DataHelper {
     public static DataCard getCardEmptyNumber() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard(" ", month, year, cardHolder, cvs2);
@@ -60,7 +60,7 @@ public class DataHelper {
     public static DataCard getCardNumberInputLatin() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("aaaa bbbb cccc dddd", month, year, cardHolder, cvs2);
@@ -69,7 +69,7 @@ public class DataHelper {
     public static DataCard getCardNumberInputCyrillic() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("аааа бббб вввв гггг", month, year, cardHolder, cvs2);
@@ -78,7 +78,7 @@ public class DataHelper {
     public static DataCard getCardNumberInputSpecialCharacters() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("@#$% @#$% ^&*( ^&*(", month, year, cardHolder, cvs2);
@@ -88,7 +88,7 @@ public class DataHelper {
         Faker faker = new Faker();
         String cardNumber = faker.number().digits(15);
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard(cardNumber, month, year, cardHolder, cvs2);
@@ -104,7 +104,7 @@ public class DataHelper {
     public static DataCard getCardMoreFourYear() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(6);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, cvs2);
@@ -121,7 +121,7 @@ public class DataHelper {
     public static DataCard getCardEmptyFieldYear() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, " ", cardHolder, cvs2);
     }
@@ -138,7 +138,7 @@ public class DataHelper {
     public static DataCard getCardOneDigitInFieldYear() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = faker.number().digit();
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, cvs2);
@@ -179,7 +179,7 @@ public class DataHelper {
     public static DataCard getCardInputCyrillicInFieldYear() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, "бб", cardHolder, cvs2);
     }
@@ -187,7 +187,7 @@ public class DataHelper {
     public static DataCard getCardInputLatinInFieldYear() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, "zz", cardHolder, cvs2);
     }
@@ -201,7 +201,7 @@ public class DataHelper {
 
     public static DataCard getCardNoCardHolder() {
         Faker faker = new Faker();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, year, " ", cvs2);
@@ -210,7 +210,7 @@ public class DataHelper {
     public static DataCard getCardHolderCyrillic() {
         Faker faker = new Faker(new Locale("ru"));
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, cvs2);
@@ -218,7 +218,7 @@ public class DataHelper {
 
     public static DataCard getCardHolderSpecialCharacters() {
         Faker faker = new Faker();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cvs2 = faker.number().digits(3);
         return new DataCard("4444 4444 4444 4441", month, year, "!@#$%^&*", cvs2);
@@ -227,7 +227,7 @@ public class DataHelper {
     public static DataCard getCardEmptyFieldCVV2_CVS2() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, " ");
     }
@@ -235,7 +235,7 @@ public class DataHelper {
     public static DataCard getCardInputCyrillicInFieldCVV2_CVS2() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, "абв");
     }
@@ -243,14 +243,14 @@ public class DataHelper {
     public static DataCard getCardInputLatinInFieldCVV2_CVS2() {
         Faker faker = new Faker();
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, "abc");
     }
 
     public static DataCard getCardInputFieldCVV2_CVS2SpecialCharacters() {
         Faker faker = new Faker();
-        String month = getShiftedMonth(9);
+        String month = getShiftedMonth(8);
         String year = getShiftedYear(1);
         String cardHolder = faker.name().firstName() + " " + faker.name().lastName();
         return new DataCard("4444 4444 4444 4441", month, year, cardHolder, "#$%");

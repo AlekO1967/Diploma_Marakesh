@@ -20,13 +20,13 @@ public class PaymentGateTests {
 
     @BeforeEach
     public void openPage() {
+        SqlHelper.clearDB();
         open(System.getProperty("sut.url"));
     }
 
     @AfterAll
     public static void tearDownAll() {
         SelenideLogger.removeListener("allure");
-        SqlHelper.clearDB();
     }
 
     @Test

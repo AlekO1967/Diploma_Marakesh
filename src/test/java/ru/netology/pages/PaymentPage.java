@@ -39,7 +39,6 @@ public class PaymentPage {
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement cvcFieldError = $$(".input__top").find(exactText("CVC/CVV")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
-    private SelenideElement cancelField = $$("[class=\"icon-button_text\"]").first();
 
     public PaymentPage() {
         heading.shouldBe(visible);
@@ -56,7 +55,6 @@ public class PaymentPage {
 
     public void waitForApprovalNotification() {
         approvedOperation.shouldBe(visible, Duration.ofSeconds(15));
-        cancelField.click();
     }
 
     public void waitForNotificationFailure() {
