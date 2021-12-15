@@ -58,11 +58,11 @@ public class PaymentPage {
     }
 
     public void waitForNotificationFailure() {
-        failureOperation.shouldBe(visible, Duration.ofSeconds(15));
+        failureOperation.shouldBe(visible, Duration.ofSeconds(20));
     }
 
     public void wrongFormatCardNumber() {
-        wrongFormatCardNumber.shouldBe(visible);
+        wrongFormatCardNumber.shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void wrongFormatMonth() {
@@ -78,7 +78,7 @@ public class PaymentPage {
     }
 
     public void wrongFormatDateCard() {
-        wrongDateCard.shouldBe(visible);
+        wrongDateCard.shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void expiredDateCard() {
@@ -90,7 +90,7 @@ public class PaymentPage {
     }
 
     public void wrongFormatCardHolderField() {
-        wrongCardHolderField.shouldBe(visible);
+        wrongCardHolderField.shouldBe(visible, Duration.ofSeconds(25));
     }
 
     public void wrongFormatCVC() {

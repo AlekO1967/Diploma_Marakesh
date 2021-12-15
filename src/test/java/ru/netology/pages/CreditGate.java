@@ -80,7 +80,7 @@ public class CreditGate {
     }
 
     public void wrongFormatDateCard() {
-        wrongDateCard.shouldBe(visible);
+        wrongDateCard.shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void expiredDateCard() {
@@ -92,7 +92,7 @@ public class CreditGate {
     }
 
     public void wrongFormatCardHolderField() {
-        wrongCardHolderField.shouldBe(visible);
+        wrongCardHolderField.shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void wrongFormatCVC() {
