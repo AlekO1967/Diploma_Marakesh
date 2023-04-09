@@ -9,8 +9,8 @@
 
 ## Тестовая документация
 1. [План тестирования](https://github.com/AlekO1967/Diploma_Marakesh/blob/master/documentation/Plan.md);
-1. [Отчёт по итогам тестирования]();
-1. [Отчет по итогам автоматизации]()
+1. [Отчёт по итогам тестирования](https://github.com/AlekO1967/Diploma_Marrakesh/blob/master/documentation/Repotr.md);
+1. [Отчет по итогам автоматизации](https://github.com/AlekO1967/Diploma_Marrakesh/blob/master/documentation/Summary.md)
 
 ## Запуск приложения
 ### Подготовительный этап
